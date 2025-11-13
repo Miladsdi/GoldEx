@@ -1,221 +1,134 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GoldEx | محاسبه آنلاین طلا و ارز</title>
+    <meta charset="UTF-8">
+    <title>GoldEx v4</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        background: #0e1a2b;
-        font-family: "Vazirmatn", sans-serif;
-        color: #fff;
-    }
-    .container {
-        max-width: 600px;
-        margin: auto;
-        padding: 20px;
-    }
-    .card {
-        background: #14263b;
-        padding: 20px;
-        border-radius: 14px;
-        margin-bottom: 25px;
-        box-shadow: 0 0 25px rgba(0,0,0,0.35);
-    }
-    h2 {
-        margin-top: 0;
-        text-align: center;
-    }
-    select, input {
-        width: 100%;
-        padding: 14px;
-        border-radius: 10px;
-        border: none;
-        margin: 12px 0;
-        font-size: 15px;
-    }
-    button {
-        width: 100%;
-        padding: 14px;
-        border-radius: 10px;
-        border: none;
-        margin-top: 6px;
-        cursor: pointer;
-        background: #08c0ff;
-        color: #000;
-        font-size: 17px;
-        font-weight: bold;
-    }
-    .result {
-        margin-top: 15px;
-        background: #0e1f31;
-        padding: 12px;
-        border-radius: 10px;
-        font-size: 16px;
-        line-height: 2;
-    }
-    .live {
-        background: #112233;
-        padding: 12px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-        line-height: 2;
-    }
-    .adv-box {
-        display: none;
-        margin-top: 12px;
-        padding: 12px;
-        background: #18314f;
-        border-radius: 10px;
-    }
-    #advToggle {
-        margin-top: 15px;
-        background: #ffcc00;
-    }
-</style>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="animations.css">
 </head>
 
 <body>
-<div class="container">
+<div class="app">
 
-    <!-- LIVE PRICES -->
-    <div class="live" id="liveBox">
-        ⏳ در حال دریافت قیمت‌های لحظه‌ای...
-    </div>
+    <!-- HEADER -->
+    <header class="header glass slide-down">
+        <div class="logo-area">
+            <h1 class="logo-title">
+                <i class="fa-solid fa-gem neon-blue"></i>
+                GoldEx
+            </h1>
+            <p class="tagline">قیمت لحظه‌ای طلا، ارز و ماشین حساب سرمایه</p>
+        </div>
 
-    <!--  تبدیل تومان به طلا -->
-    <div class="card">
-        <h2>🥇 تبدیل تومان به طلا</h2>
-        <label>مبلغ شما (تومان)</label>
-        <input type="number" id="goldAmount" placeholder="مثلاً 50000000">
-        <div id="goldWords"></div>
+        <div class="update-area">
+            <span id="last-update" class="fade-in">در حال دریافت اطلاعات...</span>
+        </div>
+    </header>
 
-        <label>نوع طلا</label>
-        <select id="goldType">
-            <option value="gold18">طلای ۱۸ عیار</option>
-            <option value="gold24">طلای ۲۴ عیار</option>
-        </select>
+    <!-- SUMMARY CARDS -->
+    <section id="summary-cards" class="summary-cards fade-in-up">
+        <!-- Cards توسط JS ساخته می‌شن -->
+    </section>
 
-        <button onclick="calcGold()">محاسبه مقدار طلا</button>
+    <main class="grid-layout">
 
-        <div class="result" id="goldResult"></div>
-    </div>
+        <!-- PRICE TABLE -->
+        <section class="panel table-panel glass-lt fade-in-up">
+            <h2><i class="fa-solid fa-table-list neon-purple"></i> جدول قیمت‌ها</h2>
 
-    <!-- تبدیل تومان به ارز -->
-    <div class="card">
-        <h2>💵 تبدیل تومان و ارز</h2>
-        <label>مبلغ</label>
-        <input type="number" id="fxAmount" placeholder="مثلاً 50000000">
-        <div id="fxWords"></div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>آیتم</th>
+                            <th>قیمت</th>
+                            <th>نوع</th>
+                        </tr>
+                    </thead>
+                    <tbody id="prices-table-body">
+                        <!-- پر میشه -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
-        <label>نوع ارز</label>
-        <select id="fxType"></select>
+        <!-- CALCULATORS -->
+        <section class="panel calcs-panel glass-lt fade-in-up">
 
-        <button onclick="calcFx()">محاسبه</button>
+            <h2><i class="fa-solid fa-calculator neon-purple"></i> محاسبه‌گر سرمایه</h2>
 
-        <div class="result" id="fxResult"></div>
-    </div>
+            <!-- Gold Calc -->
+            <div class="calc-card glass-md neon-border">
+                <h3><i class="fa-solid fa-coins neon-blue"></i> تبدیل تومان به طلا</h3>
 
-    <button id="advToggle" onclick="toggleAdv()">🔧 حالت پیشرفته</button>
+                <div class="calc-fields">
+                    <label>
+                        مبلغ (تومان)
+                        <input type="number" id="gold-amount" placeholder="مثلاً 50000000">
+                    </label>
 
-    <div class="adv-box" id="advBox">
-        <p>✔ فرمول حرفه‌ای طلا</p>
-        <p>✔ اجرت ساخت + سود + مالیات</p>
-        <p>✔ محاسبات پیشرفته معامله</p>
-    </div>
+                    <label>
+                        نوع طلا
+                        <select id="gold-type">
+                            <option value="gold18">طلای ۱۸ عیار</option>
+                            <option value="gold24">طلای ۲۴ عیار</option>
+                        </select>
+                    </label>
+                </div>
+
+                <button id="gold-calc-btn" class="btn-primary">محاسبه</button>
+                <p id="gold-result" class="calc-result"></p>
+            </div>
+
+            <!-- Forex Calc -->
+            <div class="calc-card glass-md neon-border">
+                <h3><i class="fa-solid fa-money-bill-wave neon-blue"></i> تبدیل تومان ↔ ارز</h3>
+
+                <div class="calc-tabs">
+                    <button class="tab-btn active" data-mode="fiat-to-forex">تومان → ارز</button>
+                    <button class="tab-btn" data-mode="forex-to-fiat">ارز → تومان</button>
+                </div>
+
+                <div class="calc-fields">
+                    <label>
+                        مبلغ
+                        <input type="number" id="fx-amount" placeholder="مثلاً 1000">
+                    </label>
+
+                    <label>
+                        نوع ارز
+                        <select id="fx-type">
+                            <option value="usd">دلار آمریکا (USD)</option>
+                            <option value="eur">یورو (EUR)</option>
+                            <option value="gbp">پوند (GBP)</option>
+                            <option value="aed">درهم (AED)</option>
+                            <option value="try">لیر (TRY)</option>
+                        </select>
+                    </label>
+                </div>
+
+                <button id="fx-calc-btn" class="btn-primary">محاسبه</button>
+                <p id="fx-result" class="calc-result"></p>
+            </div>
+
+        </section>
+    </main>
+
+    <footer class="footer fade-in">
+        Developed by Milad Saeedi · GoldEx v4
+    </footer>
 
 </div>
 
-<script>
-//---------------------------------------
-// تبدیل عدد → حروف
-//---------------------------------------
-function numberToWords(num) {
-    if (!num) return "";
-    return new Intl.NumberFormat('fa-IR', { style: 'currency', currency: 'IRR' })
-        .format(num).replace("ریال", "تومان");
-}
-
-//---------------------------------------
-// دریافت قیمت‌ها از API (لحظه‌ای)
-//---------------------------------------
-let prices = {};
-
-async function loadPrices() {
-    try {
-        const res = await fetch("/api/prices");
-        const json = await res.json();
-        prices = json.data;
-
-        document.getElementById("liveBox").innerHTML = `
-            💰 دلار: ${prices.usd.toLocaleString()} تومان<br>
-            💶 یورو: ${prices.eur.toLocaleString()} تومان<br>
-            🥇 طلا ۱۸: ${prices.gold18.toLocaleString()} تومان<br>
-            🥇 طلا ۲۴: ${prices.gold24.toLocaleString()} تومان<br>
-            📀 مظنه: ${prices.mozane.toLocaleString()} تومان
-        `;
-
-        // ارزها
-        let fxSel = document.getElementById("fxType");
-        fxSel.innerHTML = "";
-        Object.keys(prices).forEach(key => {
-            if (["usd","eur","gbp","try","aed"].includes(key)) {
-                fxSel.innerHTML += `<option value="${key}">${key.toUpperCase()}</option>`;
-            }
-        });
-
-    } catch {
-        document.getElementById("liveBox").innerHTML = "❌ خطا در دریافت قیمت‌ها";
-    }
-}
-
-// به‌روزرسانی هر 10 ثانیه
-loadPrices();
-setInterval(loadPrices, 10000);
-
-//---------------------------------------
-// تبدیل تومان → طلا
-//---------------------------------------
-function calcGold() {
-    let amount = Number(document.getElementById("goldAmount").value);
-    let type = document.getElementById("goldType").value;
-
-    document.getElementById("goldWords").innerText = numberToWords(amount);
-
-    if (!amount || !prices[type]) return;
-
-    let gram = amount / prices[type];
-    document.getElementById("goldResult").innerHTML =
-        `📌 می‌توانید حدود <b>${gram.toFixed(2)}</b> گرم ${type === "gold18" ? "طلای ۱۸ عیار" : "طلای ۲۴ عیار"} بخرید.`;
-}
-
-//---------------------------------------
-// تبدیل تومان → ارز
-//---------------------------------------
-function calcFx() {
-    let amount = Number(document.getElementById("fxAmount").value);
-    let type = document.getElementById("fxType").value;
-
-    document.getElementById("fxWords").innerText = numberToWords(amount);
-
-    if (!amount || !prices[type]) return;
-
-    let qty = amount / prices[type];
-    document.getElementById("fxResult").innerHTML =
-        `📌 مقدار قابل خرید: <b>${qty.toFixed(4)}</b> ${type.toUpperCase()}`;
-}
-
-//---------------------------------------
-// حالت پیشرفته
-//---------------------------------------
-function toggleAdv() {
-    let box = document.getElementById("advBox");
-    box.style.display = box.style.display === "block" ? "none" : "block";
-}
-</script>
-
+<script src="/static/app.js"></script>
 </body>
 </html>

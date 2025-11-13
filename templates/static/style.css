@@ -1,0 +1,225 @@
+/* ===========================================
+   GoldEx - V4 Neo UI
+   Designer: M&F 
+   =========================================== */
+
+/* -------- COLOR VARIABLES -------- */
+:root {
+    --bg-1: #0d1117;
+    --bg-2: #161b22;
+    --bg-card: rgba(22, 27, 34, 0.75);
+    --glass: rgba(255, 255, 255, 0.08);
+
+    --gold: #facc15;
+    --aqua: #38bdf8;
+    --lime: #4ade80;
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+    --danger: #f87171;
+    --border: rgba(255, 255, 255, 0.08);
+
+    --radius-lg: 18px;
+    --radius-md: 12px;
+    --shadow-soft: 0 10px 30px rgba(0,0,0,0.45);
+}
+
+/* -------- RESET -------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Vazirmatn", sans-serif;
+    background: linear-gradient(180deg, #0a0d12, #0d1117 40%, #0b1014);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+/* -------- WRAPPER -------- */
+.app-wrapper {
+    max-width: 1250px;
+    margin: 0 auto;
+}
+
+/* -------- HEADER -------- */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 24px;
+}
+
+.app-header h1 {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.app-header p {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.header-meta {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+/* -------- SUMMARY CARDS -------- */
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-bottom: 25px;
+}
+
+.summary-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    padding: 16px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    animation: fadeUp 0.6s ease forwards;
+    opacity: 0;
+}
+
+.summary-card .label {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.summary-card .value {
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 5px;
+}
+
+.summary-card .tag {
+    margin-top: 6px;
+    background: rgba(250, 204, 21, 0.12);
+    color: var(--gold);
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* -------- MAIN LAYOUT -------- */
+.main-layout {
+    display: grid;
+    grid-template-columns: 1.8fr 1.1fr;
+    gap: 18px;
+}
+
+/* -------- PANELS (TABLE + CALC) -------- */
+.panel {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    padding: 18px;
+    box-shadow: var(--shadow-soft);
+}
+
+.panel h2 {
+    font-size: 17px;
+    margin-bottom: 14px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* -------- TABLE -------- */
+.table-wrapper {
+    height: 450px;
+    overflow-y: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+th {
+    background: #1a1f27;
+    color: var(--muted);
+    font-weight: 600;
+    padding: 10px;
+    position: sticky;
+    top: 0;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid var(--border);
+}
+
+tbody tr:nth-child(odd) {
+    background: rgba(255,255,255,0.03);
+}
+
+/* -------- CALC CARDS -------- */
+.calc-card {
+    background: var(--bg-2);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    border: 1px solid var(--border);
+    margin-bottom: 14px;
+}
+
+/* INPUTS */
+input, select {
+    background: #0f141b;
+    padding: 9px 10px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    color: white;
+    width: 100%;
+    font-size: 13px;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--aqua);
+    box-shadow: 0 0 6px rgba(56,189,248,0.4);
+}
+
+/* BUTTONS */
+.primary-btn {
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px;
+    background: linear-gradient(135deg, var(--aqua), #0ea5e9);
+    border-radius: 999px;
+    color: #041017;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(56,189,248, 0.4);
+}
+
+/* -------- RESPONSIVE -------- */
+@media (max-width: 900px) {
+    .main-layout {
+        grid-template-columns: 1fr;
+    }
+}
