@@ -1,3 +1,4 @@
+gunicorn==22.0.0
 Flask
 requests
 beautifulsoup4
