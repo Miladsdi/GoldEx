@@ -1,6 +1,7 @@
 from flask import Flask, render_template, jsonify
 import requests
 from bs4 import BeautifulSoup
+import os
 
 app = Flask(__name__)
 
@@ -15,21 +16,18 @@ def get_gold_prices():
 
     data = {}
 
-    # مظنه تهران
     try:
         mozane = soup.select_one("tr:nth-of-type(2) td.price").text.strip()
         data["mozane"] = int(mozane.replace(",", ""))
     except:
         pass
 
-    # طلای 18
     try:
         gold18 = soup.select_one("tr:nth-of-type(3) td.price").text.strip()
         data["gold18"] = int(gold18.replace(",", ""))
     except:
         pass
 
-    # طلای 24
     try:
         gold24 = soup.select_one("tr:nth-of-type(4) td.price").text.strip()
         data["gold24"] = int(gold24.replace(",", ""))
@@ -62,7 +60,6 @@ def get_fx_prices():
         if price.isdigit():
             price = int(price)
 
-        # مچ با اسم‌ها
         if "دلار" in name:
             data["usd"] = price
         elif "یورو" in name:
@@ -85,8 +82,7 @@ def api_prices():
     gold = get_gold_prices()
     fx = get_fx_prices()
 
-    result = {**gold, **fx}
-    return jsonify({"status": "ok", "data": result})
+    return jsonify({"status": "ok", "data": {**gold, **fx}})
 
 
 # ==========================
@@ -98,7 +94,8 @@ def home():
 
 
 # ==========================
-# ✨ اجرای app
+# ✨ اجرای app — نسخه صحیح برای Render
 # ==========================
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
