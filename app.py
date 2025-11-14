@@ -75,8 +75,7 @@ def get_fx_prices():
 
 
 # ==========================
-# 🔥 3) API ترکیبی برای UI
-# ==========================
+
 @app.route("/api/prices")
 def api_prices():
     gold = get_gold_prices()
@@ -86,16 +85,15 @@ def api_prices():
 
 
 # ==========================
-# 🔥 صفحه اصلی
-# ==========================
+
+
 @app.route("/")
 def home():
     return render_template("index.html")
 
 
 # ==========================
-# ✨ اجرای app — نسخه صحیح برای Render
-# ==========================
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
